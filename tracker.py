@@ -59,9 +59,6 @@ class MechTracker(cmd2.Cmd):
             json.dump(status, fd, indent=2)
         return stop
 
-    def emptyline(self):
-        return None
-
     ap_ident = argparse.ArgumentParser()
     ap_ident.add_argument("hero_id", help="Hero Lance Identity")
     ap_ident.add_argument("opfor_id", help="OpFor Lance Identity")
@@ -89,6 +86,10 @@ class MechTracker(cmd2.Cmd):
             print("Can't Find Mech {}".format(args.mech))
             return
         side = self.sides[args.side]['units'].append(Mech(args.identifier, mtf))
+
+    def do_replay(self, args):
+        with open(args, 'r') as fd:
+            self.cmdqueue.extend(fd.readlines())
 
     def do_show(self, args):
         print('Heroes: {}'.format(self.hero['name']))
