@@ -148,9 +148,9 @@ class BattleMech(Unit):
                 start = True
 
 if __name__ == '__main__':
-    ghr5j = BattleMech("Grasshopper", "GHR-5J")
+    ghr5j = BattleMech()
     ghr5j.mtf_load("mechs/ghr5j.mtf")
-    bnc53 = BattleMech("Banshee", "BNC-3E")
+    bnc53 = BattleMech()
     bnc53.mtf_load("mechs/bnc3e.mtf")
     print(ghr5j.jsonstr())
     print(bnc53.jsonstr())

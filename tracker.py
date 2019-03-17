@@ -5,7 +5,7 @@ import argparse
 import cmd2
 import json
 import readline
-import math
+import time
 
 import builder
 
@@ -22,10 +22,13 @@ class Mech(builder.BattleMech):
         super().__init__()
         self.mtf_load(mtf)
 
+    def json(self):
+        out = super().json()
+        out[list(out)[0]]['identifier'] = self.identifier
+        return out
+
 class MechTracker(cmd2.Cmd):
     intro = "Welcome to Mech Tracker! - Setting up Battle!"
-    prompt = '(battle) '
-    file = None
 
     def __init__(self):
         self.hero = {'name': '',
@@ -34,7 +37,30 @@ class MechTracker(cmd2.Cmd):
                       'units': []}
         self.sides = {'hero': self.hero, 'opfor': self.opfor}
         self.prompt = "({} vs {}) ".format(self.hero['name'], self.opfor['name'])
+        file_base = int(time.time())
+        self.file = "{}.replay".format(file_base)
+        self.status = "{}.json".format(file_base)
         super().__init__()
+
+
+    def postcmd(self, stop, line):
+        readline.write_history_file(self.file)
+        status = {  "battle": {
+                        "heroes": {
+                            "name": self.hero['name'],
+                        },
+                        "opfor": {
+                            "name": self.opfor['name'],
+                        }
+                    }}
+        status['battle']['heroes']['units'] = [x.json() for x in self.hero['units']]
+        status['battle']['opfor']['units'] = [x.json() for x in self.opfor['units']]
+        with open(self.status, 'w+') as fd:
+            json.dump(status, fd, indent=2)
+        return stop
+
+    def emptyline(self):
+        return None
 
     ap_ident = argparse.ArgumentParser()
     ap_ident.add_argument("hero_id", help="Hero Lance Identity")
