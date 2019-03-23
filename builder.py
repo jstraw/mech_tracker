@@ -22,6 +22,7 @@ class Unit:
         self.jump = 0
         self.heat = {"number": 0, "type": "Single"}
         self.weapons = { key: [] for key in self.locations}
+        self.identifier = ""
 
     def set_armor(self):
         print("Set Armor Values for {}".format(self.name))
@@ -44,6 +45,7 @@ class Unit:
         out = {self.unit_type: {
             "name": self.name,
             "designator": self.designator,
+            "call_sign": self.identifier,
             "weight": self.weight,
             "walk": self.walk,
             "jump": self.jump,
