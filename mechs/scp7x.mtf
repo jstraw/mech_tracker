@@ -1,0 +1,118 @@
+Version:1.0
+Scorpion
+SCP-7X
+
+Config:Quad
+TechBase:Inner Sphere
+Era:3145
+Rules Level:4
+
+Mass:55
+Engine:330 XL Engine(IS)
+Structure:Standard
+Gyro:Standard
+Myomer:ISMASC
+
+Heat Sinks:0 Double
+Walk MP:6
+Jump MP:0
+
+Armor:Standard(Inner Sphere)
+FLL Armor:20
+FRL Armor:20
+LT Armor:16
+RT Armor:16
+CT Armor:23
+HD Armor:9
+RLL Armor:20
+RRL Armor:20
+RTL Armor:5
+RTR Armor:5
+RTC Armor:8
+
+Weapons:2
+ISStreakSRM6, Left Torso
+ISSNPPC, Right Torso
+
+
+Front Left Leg:
+Hip
+Upper Leg Actuator
+Lower Leg Actuator
+Foot Actuator
+-Empty-
+-Empty-
+
+Front Right Leg:
+Hip
+Upper Leg Actuator
+Lower Leg Actuator
+Foot Actuator
+-Empty-
+-Empty-
+
+Left Torso:
+Fusion Engine
+Fusion Engine
+Fusion Engine
+ISStreakSRM6
+ISStreakSRM6
+ISCASEII
+IS Streak SRM 6 Ammo
+Beagle Active Probe
+Beagle Active Probe
+-Empty-
+-Empty-
+-Empty-
+
+Right Torso:
+Fusion Engine
+Fusion Engine
+Fusion Engine
+ISHeadTurret
+ISSNPPC
+ISSNPPC
+ISMASC
+ISMASC
+ISMASC
+-Empty-
+-Empty-
+-Empty-
+
+Center Torso:
+Fusion Engine
+Fusion Engine
+Fusion Engine
+Fusion Engine
+Fusion Engine
+Fusion Engine
+Gyro
+Gyro
+Gyro
+Gyro
+Supercharger
+-Empty-
+
+Head:
+Life Support
+Sensors
+Cockpit
+-Empty-
+Sensors
+Life Support
+
+Rear Left Leg:
+Hip
+Upper Leg Actuator
+Lower Leg Actuator
+Foot Actuator
+-Empty-
+-Empty-
+
+Rear Right Leg:
+Hip
+Upper Leg Actuator
+Lower Leg Actuator
+Foot Actuator
+-Empty-
+-Empty-
