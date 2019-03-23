@@ -9,7 +9,8 @@ import time
 import cmd2
 import colorama
 
-import builder
+import units.biped
+import units.quad
 
 colorama.init()
 
@@ -22,6 +23,7 @@ def lookup_mech(mech):
 
 
 class MechTracker(cmd2.Cmd):
+    quiet = True
     intro = "Welcome to Mech Tracker! - Setting up Battle!"
     damage_lookup = {
         "h": "Head",
@@ -31,6 +33,10 @@ class MechTracker(cmd2.Cmd):
         "rtl": "Left Torso, Rear",
         "rtr": "Right Torso, Rear",
         "rtc": "Center Torso, Rear",
+        "rll": "Left Leg, Rear",
+        "rlr": "Right Leg, Rear",
+        "fll": "Left Leg, Front",
+        "flr": "Right Leg, Front",
         "ar": "Right Arm",
         "al": "Left Arm",
         "lr": "Right Leg",
@@ -104,11 +110,19 @@ class MechTracker(cmd2.Cmd):
             self.perror("NotImplemented")
             return true
         mtf = lookup_mech(args.mech)
+        self.pfeedback(mtf)
         if mtf is None:
             self.perror("Can't Find Mech {}".format(args.mech))
             return
-        newmech = builder.BattleMech()
+        with open(mtf, 'r') as fd:
+            data = [x.strip() for x in fd.readlines()]
+            if "Config:Quad" in data:
+                unit_type = units.quad.Quad
+            else:
+                unit_type = units.biped.Biped
+        newmech = unit_type()
         newmech.identifier = args.identifier
+        self.pfeedback(newmech)
         newmech.mtf_load(mtf)
         side = self.sides[args.side]['units'].append(newmech)
 
@@ -128,7 +142,7 @@ class MechTracker(cmd2.Cmd):
                     j['jump']
             ))
             self.poutput("  Armor:")
-            for l in [y for y in x.locations if 'Rear' not in y]:
+            for l in [y for y in x.locations if x.no_internal not in y]:
                 c = ''
                 if j['internal_damage'][l]:
                     c = colorama.Fore.RED
@@ -138,7 +152,7 @@ class MechTracker(cmd2.Cmd):
                     (j['armor'][l] - j['damage'][l]), j['armor'][l],
                     (j['internal'][l] - j['internal_damage'][l]), j['internal'][l]
                 ),color=c)
-            for l in [y for y in x.locations if 'Rear' in y]:
+            for l in [y for y in x.locations if x.no_internal in y]:
                 c = ''
                 if j['damage'][l]:
                     c = colorama.Fore.YELLOW
